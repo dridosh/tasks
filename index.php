@@ -4,21 +4,71 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Hello, world!</title>
 </head>
 <body class="container mt-5">
 
-<form method="post" action="index.php">
+<section style="background-color: lightgray ;">
+    <div class="container py-3">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-9 col-xl-7">
+                <div class="card rounded-5">
+                    <div class="card-body p-4">
+                        <h4 class="text-center my-3 pb-3">To Do List</h4>
+                        <form method="POST" action="add_task.php">
+                            <div class="col-12 mb-1 pb-2">
+                                <div class="form-outline">
+                                    <label for="task_text"></label>
+                                    <input type="text" id="task_text" name="task" class="form-control"
+                                           placeholder="Enter a task here"/>
+                                </div>
+                            </div>
 
-    <label> Задачи
-        <input class="form-control form-control-lg   " name="task"  placeholder="Введите задачу">
-    </label>
-    <button type="button" class="btn btn-success w-100"> Добавить</button>
+                            <div class="col-12 pb-5">
+                                <button type="submit" id="add_task" class="btn btn-primary w-100">Save</button>
+                            </div>
+                        </form>
 
+                        <table class="table mb-2">
+                            <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Todo item</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>1</th>
+                                <td>Buy groceries for next week</td>
+                                <td>In progress</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger">❌</button>
+                                    <button type="submit" class="btn btn-success ms-4"> ✔</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td>Buy car</td>
+                                <td>In progress</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger">❌</button>
+                                    <button type="submit" class="btn btn-success ms-4"> ✔</button>
+                                </td>
+                            </tbody>
+                        </table>
 
-</form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -26,36 +76,8 @@
         crossorigin="anonymous"></script>
 
 
-
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-    </tr>
-    </tbody>
-</table>
-
 </body>
+
+
+
 </html>
