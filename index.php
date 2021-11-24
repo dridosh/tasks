@@ -1,3 +1,13 @@
+<?php
+require_once 'Task.php';
+
+$res = Task::getTasks();
+echo '<pre>';
+print_r($res);
+
+?>
+
+
 <!doctype html>
 <html lang="ru">
     <head>
