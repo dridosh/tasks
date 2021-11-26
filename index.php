@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once 'Task.php';
 $res = Task::getTasks();
 ?>
@@ -16,7 +18,34 @@ $res = Task::getTasks();
         <title>Task manager</title>
     </head>
 
+
+
     <body class="container mt-5">
+        <?php
+        if (isset($_SESSION['del'])) {
+            echo
+            '<div class="alert alert-success text-center" role="alert" >
+                Task deletion was successful!
+            </div>';
+            unset($_SESSION['del']);
+        }
+        if (isset($_SESSION['add'])) {
+            echo
+            '<div class="alert alert-success text-center" role="alert" >
+                Adding tasks successfully!
+            </div>';
+            unset($_SESSION['add']);
+        }
+        if (isset($_SESSION['toggle'])) {
+            echo
+            '<div class="alert alert-success text-center" role="alert" >
+                Task status changed!
+            </div>';
+            unset($_SESSION['toggle']);
+        }
+
+        ?>
+
         <section style="background-color: lightgray ;">
             <div class="container mt-5 mb-5 py-3">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -52,9 +81,11 @@ $res = Task::getTasks();
                                         <?php
                                         foreach ($res as $key => $item) {
                                             $n = ++$key;
+
+                                            $class =$item['finished'] ? 'bg-success' :'';
                                             echo
                                             "
-                                                <tr>
+                                                <tr class='$class' >
                                                     <th>$n</th>
                                                     <td>{$item['text']}</td>
                                                     <td>{$item['finished']}</td>
