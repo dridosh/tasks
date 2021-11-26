@@ -45,13 +45,11 @@ $res = Task::getTasks();
                                             <th>#</th>
                                             <th >Task</th>
                                             <th>Status</th>
-                                            <th colspan='2'> Action</th>
-
+                                            <th colspan='2'> </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-
                                         foreach ($res as $key => $item) {
                                             $n = ++$key;
                                             echo

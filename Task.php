@@ -4,25 +4,28 @@ class Task{
 
     private $id;
 
+    protected function connect () {
+        $connect_db = require 'connect_db.php';
+        return $connect_db['con'];
+    }
 
-    public function __construct ($id) {
+    public function __construct ($id = 0) {
         $this->id = $id;
     }
 
-    public function del () {
-        $connect_db = require 'connect_db.php';
-        $con = $connect_db['con'];
+    public function del (): void {
         $query = 'DELETE FROM tasks WHERE id= :id';
-        $res = $con->prepare($query);
-        $res->execute([':id' => $this->id]);
+        $this->connect()->prepare($query)->execute([':id' => $this->id]);
     }
 
     public function toggle ($finished): void {
-        $connect_db = require 'connect_db.php';
-        $con = $connect_db['con'];
         $query = 'UPDATE tasks SET finished = :toggle WHERE  id= :id';
-        $res = $con->prepare($query);
-        $res->execute([':id' => $this->id, ':toggle' => $finished]);
+        $this->connect()->prepare($query)->execute([':id' => $this->id, ':toggle' => $finished]);
+    }
+
+    public function add ($text, $user_id): void {
+        $query = "INSERT INTO tasks (text, finished, employs_id) VALUES (:text, '0', '1')";
+        $this->connect()->prepare($query)->execute([':text' => $text]);
     }
 
     public static function getTasks (): array {
@@ -35,13 +38,6 @@ class Task{
             $data[] = $row;
         }
         return $data;
-    }
-
-    public static function add ($text): void {
-        $connect_db = require 'connect_db.php';
-        $con = $connect_db['con'];
-        $query = "INSERT INTO fullstack.tasks (text, finished, employs_id) VALUES ('$text', '0', '1')";
-        $con->query($query);
     }
 
 }

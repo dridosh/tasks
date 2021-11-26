@@ -6,7 +6,9 @@ $text = $_POST['task'];
 
 //var_dump($_POST);
 //die;
-Task::add($text);
+$task = new Task();
+$task->add($text,1);
+//Task::add($text);
 
 header('Location: index.php');
 
