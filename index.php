@@ -1,12 +1,7 @@
 <?php
 require_once 'Task.php';
-
 $res = Task::getTasks();
-echo '<pre>';
-print_r($res);
-
 ?>
-
 
 <!doctype html>
 <html lang="ru">
@@ -23,10 +18,10 @@ print_r($res);
 
     <body class="container mt-5">
         <section style="background-color: lightgray ;">
-            <div class="container mt-5 py-3">
+            <div class="container mt-5 mb-5 py-3">
                 <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col col-lg-9 col-xl-7">
-                        <div class="card rounded-2">
+                    <div class="col col-lg-12">
+                        <div class="card rounded-4">
                             <div class="card-body p-4">
                                 <h4 class="text-center my-3 pb-3">To Do List</h4>
                                 <form method="POST" action="add_task.php">
@@ -38,7 +33,8 @@ print_r($res);
                                         </div>
                                     </div>
                                     <div class="col-12 pb-5">
-                                        <button class="btn btn-primary w-100 mb-1 " type="submit" id="add_task">Save task
+                                        <button class="btn btn-primary w-100 mb-1 " type="submit" id="add_task">Save
+                                                                                                                task
                                         </button>
                                     </div>
                                 </form>
@@ -46,30 +42,41 @@ print_r($res);
                                 <table class="table mb-2">
                                     <thead>
                                         <tr>
-                                            <th>No.</th>
-                                            <th>Todo item</th>
+                                            <th>#</th>
+                                            <th >Task</th>
                                             <th>Status</th>
-                                            <th>Actions</th>
+                                            <th colspan='2'> Action</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th>1</th>
-                                            <td>Buy groceries for next week</td>
-                                            <td>In progress</td>
-                                            <td>
-                                                <button class="btn btn-danger" type="submit">❌</button>
-                                                <button class="btn btn-success ms-4" type="submit">✔</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>2</th>
-                                            <td>Buy car</td>
-                                            <td>In progress</td>
-                                            <td>
-                                                <button type="submit" class="btn btn-danger">❌</button>
-                                                <button type="submit" class="btn btn-success ms-4"> ✔</button>
-                                            </td>
+                                        <?php
+
+                                        foreach ($res as $key => $item) {
+                                            $n = ++$key;
+                                            echo
+                                            "
+                                                <tr>
+                                                    <th>$n</th>
+                                                    <td>{$item['text']}</td>
+                                                    <td>{$item['finished']}</td>
+                                                    <td>
+                                                         <form method='post' action='del_task.php'>
+                                                            <input hidden name ='id' value = '{$item['id']}'>
+                                                            <button class='btn btn - danger' type='submit'>❌</button>
+                                                        </form>   
+                                                    </td>  
+                                                    <td>    
+                                                        <form method='post' action='toggle_task.php'>
+                                                            <input hidden name ='id' value = '{$item['id']}'>
+                                                            <input hidden name ='finished' value = '{$item['finished']}'>
+                                                            <button class='btn btn - success' type='submit'>✔</button>
+                                                        </form>
+                                                     </td>
+                                                 </tr>
+                                            ";
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -89,3 +96,5 @@ print_r($res);
 
 
 </html>
+
+
