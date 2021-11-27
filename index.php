@@ -10,10 +10,11 @@ $res = Task::getTasks();
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-              crossorigin="anonymous">
+<!--        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
+<!--              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"-->
+<!--              crossorigin="anonymous">-->
 
         <title>Task manager</title>
     </head>
@@ -73,7 +74,6 @@ $res = Task::getTasks();
                                         <tr>
                                             <th>#</th>
                                             <th >Task</th>
-                                            <th>Status</th>
                                             <th colspan='2'> </th>
                                         </tr>
                                     </thead>
@@ -82,13 +82,13 @@ $res = Task::getTasks();
                                         foreach ($res as $key => $item) {
                                             $n = ++$key;
 
-                                            $class =$item['finished'] ? 'bg-success' :'';
+                                            $class =$item['finished'] ? 'bg-success bg-gradient' :'';
+                                            $strike =$item['finished'] ? 'line-through' :'none';
                                             echo
                                             "
-                                                <tr class='$class' >
+                                                <tr class='$class' style='--bs-bg-opacity: 0.2' >
                                                     <th>$n</th>
-                                                    <td>{$item['text']}</td>
-                                                    <td>{$item['finished']}</td>
+                                                    <td style='text-decoration: $strike' > {$item['text']}</td>
                                                     <td>
                                                          <form method='post' action='del_task.php'>
                                                             <input hidden name ='id' value = '{$item['id']}'>
@@ -116,10 +116,16 @@ $res = Task::getTasks();
         </section>
 
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"-->
+<!--                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"-->
+<!--                crossorigin="anonymous"></script>-->
+
+        <script>
+
+
+        </script>
 
     </body>
 
