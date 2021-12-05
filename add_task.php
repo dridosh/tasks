@@ -1,16 +1,17 @@
 <?php
-session_start();
+    session_start();
 
-require_once 'Task.php';
+    require_once 'Task.php';
 
-$text = $_POST['task'];
+    $text = $_POST['task'];
 
-//var_dump($_POST);
-//die;
-$task = new Task();
-$task->add($text,1);
-//Task::add($text);
-$_SESSION['add']=true;
+    if ($text !== '') {
+        $task = new Task();
+        $task->add($text);
+        $_SESSION['add'] = true;
+    } else{
+        $_SESSION['empty_task'] = true;
+    }
+    header('Location: index.php');
 
-header('Location: index.php');
 

@@ -1,8 +1,8 @@
 <?php
-session_start();
+    session_start();
 
-require_once 'Task.php';
-$res = Task::getTasks();
+    require_once 'Task.php';
+    $res = Task::getTasks();
 ?>
 
 <!doctype html>
@@ -10,42 +10,58 @@ $res = Task::getTasks();
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-<!--        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
-<!--              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"-->
-<!--              crossorigin="anonymous">-->
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+              crossorigin="anonymous">
 
         <title>Task manager</title>
     </head>
 
 
-
     <body class="container mt-5">
+
+
         <?php
-        if (isset($_SESSION['del'])) {
-            echo
-            '<div class="alert alert-success text-center" role="alert" >
-                Task deletion was successful!
-            </div>';
-            unset($_SESSION['del']);
-        }
-        if (isset($_SESSION['add'])) {
-            echo
-            '<div class="alert alert-success text-center" role="alert" >
-                Adding tasks successfully!
-            </div>';
-            unset($_SESSION['add']);
-        }
-        if (isset($_SESSION['toggle'])) {
-            echo
-            '<div class="alert alert-success text-center" role="alert" >
-                Task status changed!
-            </div>';
-            unset($_SESSION['toggle']);
-        }
+
+
+            $alert = ['del'        => ['Task deletion was successful!', 'alert-success'],
+                      'add'        => ['Adding task successfully!', 'alert-success'],
+                      'toggle'     => ['Task status has been changed!', 'alert-success'],
+                      'update'     => ['The task text has been changed!', 'alert-success'],
+                      'empty_task' => ['Task text cannot be empty!', 'alert-warning'],
+                      'Hello'      => ['Hello!', 'alert-success'],
+            ];
+            foreach ($alert as $index => $item) {
+
+                if (isset($_SESSION[$index])) {
+                    echo
+                        '<div class="alert  ' . $item[1] . ' text-center"  >
+                ' . $item[0] . '
+               </div>';
+                    unset($_SESSION[$index]);
+                    break;
+                }
+            }
 
         ?>
+
+        <script>
+            if ((document.getElementsByClassName('alert-success').length === 0) &&
+                (document.getElementsByClassName('alert-warning').length === 0)) {
+                let div = document.createElement('div');
+                div.className = "alert alert-success text-center";
+                if (sessionStorage.getItem('reloaded') == null) {
+                    text = document.createTextNode('Hello!!!');
+                } else {
+                    text = document.createTextNode('Refresh....');
+                }
+                div.appendChild(text);
+                document.body.appendChild(div);
+                sessionStorage.setItem('reloaded', 'yes');
+            }
+        </script>
 
         <section style="background-color: lightgray ;">
             <div class="container mt-5 mb-5 py-3">
@@ -73,22 +89,26 @@ $res = Task::getTasks();
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th >Task</th>
-                                            <th colspan='2'> </th>
+                                            <th>Task</th>
+                                            <th colspan='2'></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        foreach ($res as $key => $item) {
-                                            $n = ++$key;
 
-                                            $class =$item['finished'] ? 'bg-success bg-gradient' :'';
-                                            $strike =$item['finished'] ? 'line-through' :'none';
-                                            echo
-                                            "
+                                        <?php
+                                            foreach ($res as $key => $item) {
+                                                $n = ++$key;
+
+                                                $class = $item['finished'] ? 'bg-success bg-gradient' : '';
+                                                $strike = $item['finished'] ? 'line-through' : 'none';
+                                                echo
+                                                "
                                                 <tr class='$class' style='--bs-bg-opacity: 0.2' >
                                                     <th>$n</th>
-                                                    <td style='text-decoration: $strike' > {$item['text']}</td>
+                                                    <td style='text-decoration: $strike' >
+                                                        <a href='edit_task.php?id={$item['id']}'>
+                                                     {$item['text']} </a>
+                                                     </td>
                                                     <td>
                                                          <form method='post' action='del_task.php'>
                                                             <input hidden name ='id' value = '{$item['id']}'>
@@ -104,8 +124,9 @@ $res = Task::getTasks();
                                                      </td>
                                                  </tr>
                                             ";
-                                        }
+                                            }
                                         ?>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -116,16 +137,29 @@ $res = Task::getTasks();
         </section>
 
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+                crossorigin="anonymous"></script>
 
-<!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"-->
-<!--                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"-->
-<!--                crossorigin="anonymous"></script>-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
         <script>
 
+            setTimeout(() => {
+                $('.alert-success').animate({
+                    opacity: 0.0
+                }, 2000, function () {
+                });
+                $('.alert-warning').animate({
+                    opacity: 0.0
+                }, 5000, function () {
+                });
+
+            }, 1000)
 
         </script>
+
 
     </body>
 
