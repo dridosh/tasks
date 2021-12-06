@@ -55,7 +55,7 @@
                 if (sessionStorage.getItem('reloaded') == null) {
                     text = document.createTextNode('Hello!!!');
                 } else {
-                    text = document.createTextNode('Refresh....');
+                    text = document.createTextNode('Refresh data...');
                 }
                 div.appendChild(text);
                 document.body.appendChild(div);

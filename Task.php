@@ -28,7 +28,7 @@
         }
 
         public function add ($text): void {
-            $query = "INSERT INTO tasks (text, finished, employs_id) VALUES (:text, '0', '1')";
+            $query = "INSERT INTO tasks (text, finished) VALUES (:text, '0')";
             $this->connect()->prepare($query)->execute([':text' => $text]);
         }
 
